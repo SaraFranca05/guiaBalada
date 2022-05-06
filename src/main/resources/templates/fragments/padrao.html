@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/estilo.css">
+</head>
+<body>
+
+<header th:fragment="cabecalho">
+
+	<nav>
+	
+	<div class="nav-wrapper ">
+	
+	<a href="#!" class="brand-logo center">Gerenciador de Balada</a>
+	
+	<ul id="nav-mobile" class="right hide-on-med-and-down" th:if="${session.usuarioLogado != null}">
+	<li class="active"><a href="/cadastroAdm">Cadastro Administrador</a></li>
+	<li class="active"><a href="/listaAdm/1">Lista Cadastro</a></li>
+	<li class="button"><a href="/logout">Sair</a></li>
+	</ul>
+	
+	</div>
+	
+	
+	</nav>
+</header>
+
+  <footer th:fragment="rodape" class="page-footer">
+       
+            <div class="container">
+            © 2022 Copyright Text
+            </div>
+         
+        </footer>
+</body>
+</html>

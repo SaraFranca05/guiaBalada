@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://thymeleaf.org">
+<head>
+<title>Balada</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css"
+	href="/materialize-v1.0.0/materialize/css/materialize.css">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+</head>
+<style>
+.k1 {
+	width: 150px !important;
+}
+</style>
+<body>
+
+
+
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+
+
+	<h1>Cadastro de Baladas</h1>
+
+	<div class="container">
+
+		<div class="row">
+			<form class="col s12" method="post" action="salvarBalada"
+				enctype="multipart/form-data">
+				<div class="row">
+					<input type="hidden" name="id" th:value="${balada?.id}" />
+
+					<div class="input-field col s6">
+						<input name="nome" id="name" type="text" class="validate"
+							th:value="${balada?.nome}" placeholder="Nome"> <label
+							for="nome"></label>
+					</div>
+					<div class="input-field col s6">
+						<i class="material-icons prefix">mode_edit</i>
+						<textarea name="descricao" id="descricao"
+							class="materialize-textarea" th:value="${balada?.descricao}"
+							placeholder="Descrição"></textarea>
+						<label for="descricao"></label>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<input name="cep" id="cep" type="text" class="validate"
+							th:value="${balada?.cep}" placeholder="Cep"> <label
+							for="cep"></label>
+					</div>
+
+
+					<div class="input-field col s6">
+						<input name="endereco" id="rua" type="text" class="validate"
+							th:value="${balada?.endereco}" placeholder="Rua" readonly>
+						<label for="endereco"></label>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input name="numero" id="numero" type="text" class="validate"
+							th:value="${balada?.numero}" placeholder="Número"> <label
+							for="numero"></label>
+
+					</div>
+
+					<div class="input-field col s6">
+						<input name="comp" id="comp" type="text" class="validate"
+							th:value="${balada?.complemento}" placeholder="Complemento">
+						<label for="comp"></label>
+					</div>
+				</div>
+
+
+				<div class="input-field col s6">
+					<input name="cidade" id="cidade" type="text" class="validate"
+						th:value="${balada?.cidade}" placeholder="Cidade" readonly>
+					<label for="cidade"></label>
+
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input name="bairro" id="bairro" type="text" class="validate"
+							th:value="${balada?.bairro}" placeholder="Bairro" readonly>
+						<label for="bairro"></label>
+
+					</div>
+
+					<div class="input-field col s6">
+						<input name="estado" id="uf" type="text" class="validate"
+							th:value="${balada?.estado}" placeholder="Estado" readonly>
+						<label for="estado"></label>
+					</div>
+
+					<div class="input-field col s4">
+						<select name="tipo.id">
+						<option value="" disabled selected>Escolha</option>
+						<option th:each="b: ${tipos}" th:text="${b.nome}"
+						th:value="${b.id}" th:selected="${b.id == balada?.tipo?.id}"></option>
+						</select> <label >Tipo de Balada:</label>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<input name="site" id="site" type="tel" class="validate"
+							th:value="${balada?.site}" placeholder="Site"> <label
+							for="site"></label>
+					</div>
+
+					<div class="input-field col s6">
+						<input name="telefone" id="tel" type="tel" class="validate"
+							th:value="${balada?.telefone}" placeholder="Telefone"> <label
+							for="telefone"></label>
+					</div>
+
+
+					<div class="input-field col s6">
+						<input name="horario" id="horario" type="text" class="validate"
+							th:value="${balada?.horario}" placeholder="Horário"> <label
+							for="horario"></label>
+					</div>
+
+
+				</div>
+		</div>
+
+
+		<div class="row">
+			<div class="group col s4">
+				<label for="pass" class="label">Estacionamento:</label> <input
+					name="estacionamento" id="estacionamento" type="radio"
+					class="input">
+				<p>
+					<label> <input type="radio" name="estacionamento"
+						th:checked="${balada?.estacionamento}" value="1" /> <span>Sim</span></label>
+					<label> <input type="radio" name="estacionamento"
+						th:checked="${balada?.estacionamento == false}" value="0" />
+						<span>Não</span></label>
+				</p>
+			</div>
+
+
+			<div class="group col s4">
+				<label for="pass" class="label">Open Bar:</label> <input
+					name="openbar" id="openbar" type="radio" class="input">
+				<p>
+					<label> <input type="radio" name="openbar" value="1"
+						th:checked="${balada?.openbar}" /> <span>Sim</span></label> <label>
+						<input type="radio" name="openbar" value="0"
+						th:checked="${balada?.openbar == false}" /> <span>Não</span>
+					</label>
+				</p>
+			</div>
+
+			<div class="group col s4">
+				<label for="pass" class="label">Camarote:</label> <input
+					name="camarote" id="camarote" type="radio" class="input">
+				<p>
+					<label> <input type="radio" name="camarote" value="1"
+						th:checked="${balada?.camarote}" /> <span>Sim</span></label> <label>
+						<input type="radio" name="camarote" value="0"
+						th:checked="${balada?.camarote == false}"  /> <span>Não</span>
+					</label>
+				</p>
+			</div>
+
+			<div class="group col s4">
+				<label for="pass" class="label">Acessibilidade:</label> <input
+					name="acessibilidade" id="acessibilidade" type="radio"
+					class="input">
+				<p>
+					<label> <input type="radio" name="acessibilidade"
+						value="1" th:checked="${balada?.acessibilidade}" /> <span>Sim</span></label>
+					<label> <input type="radio" name="acessibilidade"
+						value="0" th:checked="${balada?.acessibilidade == false}" /> <span>Não</span></label>
+				</p>
+			</div>
+
+			<div class="group col s4">
+				<label for="pass" class="label">Área de Fumante:</label> <input
+					name="areadeFumante" id="areadeFumante" type="radio" class="input">
+				<p>
+					<label> <input type="radio" name="areadeFumante"
+						value="1" th:checked="${balada?.areadeFumante}" /> <span>Sim</span></label>
+					<label> <input type="radio" name="areadeFumante"
+						value="0" th:checked="${balada?.areadeFumante == false}" /> <span>Não</span></label>
+				</p>
+			</div>
+
+			<div class="group col s4">
+				<label for="pass" class="label">Atrações:</label> <input
+					name="atracoes" id="atracoes" type="radio" class="input">
+				<p>
+					<label> <input type="radio" name="atracoes" value="1"
+						th:checked="${balada?.atracoes == 'true'}" /> <span>Sim</span></label> <label>
+						<input type="radio" name="atracoes" value="0"
+						th:checked="${balada?.atracoes == 'false'}" /> <span>Não</span>
+					</label>
+				</p>
+			</div>
+
+			<input name="formadePagamento" id="formadePagamento" type="checkbox"
+				class="input">
+
+			<div class="input-field col s3">
+
+				<label> <input type="checkbox" name="formadePagamento"
+					th:checked="${balada?.formadePagamento}" /><span>Dinheiro</span>
+				</label>
+
+			</div>
+
+			<div class="input-field col s3">
+				<label><input type="checkbox" name="formadePagamento"
+					th:checked="${balada?.formadePagamento}" /><span>Crédito</span> </label>
+			</div>
+
+			<div class="input-field col s3">
+				<label> <input type="checkbox" name="formadePagamento"
+					th:checked="${balada?.formadePagamento}" /><span>Débito</span>
+				</label>
+			</div>
+
+			<div class="input-field col s3">
+				<label> <input type="checkbox" name="formadePagamento"
+					th:checked="${balada?.formadePagamento}" /><span>Pix</span>
+				</label>
+
+			</div>
+
+
+		</div>
+		<div class="row">
+
+			<div class="input-field col s6">
+				<p>
+					<label for="pass" class="label">Fotos:</label> <input
+						name="fileFotos" type="file" multiple accept="image/*">
+				<p>
+			</div>
+
+			<input type="hidden" th:value="${balada?.fotos}" name="fotos">
+			<div class="input-field col s6">
+				<div th:if="${balada?.fotos?.length > 0}">
+					<h6>Fotos Cadastradas</h6>
+					<div>
+						<ul id="lista_fotos_cadrest">
+							<li th:each=" foto, i : ${balada?.verFotos()}"><a
+								th:href="${foto}" target="_blank"></a><img th:src="${foto}"
+								width="40%"></a>
+								<a th:href="@{/excluirFotos(idBalada=${balada?.id},numFotos=${i.index})}"><i class="material-icons">delete_forever</i></a>
+								</li>
+						</ul>
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="input-field col s6">
+				<button name="salvar" id="salvar" type="submit" class="button">
+					Salvar</button>
+
+				<p>
+			</div>
+		</div>
+
+
+
+		<div id="dropDownSelect1"></div>
+
+
+		<footer th:replace="fragments/padrao :: rodape"></footer>
+
+		</form>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="/materialize-v1.0.0/materialize/js/materialize.min.js"></script>
+
+
+<script>
+	$(document).ready(
+			function() {
+
+				$('select').formSelect();
+
+				function limpa_formulário_cep() {
+					$("#rua").val("");
+					$("#bairro").val("");
+					$("#cidade").val("");
+					$("#uf").val("");
+				}
+
+				$("#cep").blur(
+						function() {
+
+							var cep = $(this).val().replace(/\D/g, '');
+
+							if (cep != "") {
+
+								var validacep = /^[0-9]{8}$/;
+
+								if (validacep.test(cep)) {
+
+									$("#rua").val("carregando...");
+									$("#bairro").val("carregando...");
+									$("#cidade").val("carregando...");
+									$("#uf").val("carregando...");
+
+									$.getJSON("https://viacep.com.br/ws/" + cep
+											+ "/json/?callback=?", function(
+											dados) {
+
+										if (!("erro" in dados)) {
+											$("#rua").val(dados.logradouro);
+											$("#bairro").val(dados.bairro);
+											$("#cidade").val(dados.localidade);
+											$("#uf").val(dados.uf);
+										} else {
+											limpa_formulário_cep();
+											alert("CEP não encontrado.");
+										}
+									});
+								} else {
+									limpa_formulário_cep();
+									alert("Formato de CEP inválido.");
+								}
+							} else {
+								limpa_formulário_cep();
+							}
+						});
+			});
+</script>
+
+</html>

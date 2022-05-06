@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lista: Tipo de Balada</title>
+<link rel="stylesheet" type="text/css"
+	href="/materialize-v1.0.0/materialize/css/materialize.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+</head>
+<body>
+
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+
+
+	<form action="/buscarPorTudo">
+		<p>
+			<strong>Busca por:</strong>
+		</p>
+		<input type="search" name="opcao" placeholder="D igite uma palavra" />
+
+		<p>
+			<strong>Filtra por:</strong>
+		</p>
+		<select name="select" required>
+			<option name="selecionar" selected disabled>Selecione...</option>
+			<option value="nome">Tipo Balada</option>
+			<option value="faixaEtaria">Faixa Etária</option>
+			<option value="chave">Palavra Chave</option>
+		</select>
+
+
+		<button class="btn waves-effect waves-light" type="submit"
+			 >
+			Buscar <i class="material-icons right">send</i>
+		</button>
+	</form>
+
+
+	<table>
+		<thead>
+			<tr>
+
+				<th>Id:</th>
+				<th>Tipo:</th>
+				<th>Faixa-Etária:</th>
+				<th>Descrição:</th>
+				<th>Palavra-Chave:</th>
+				<th>Alterar</th>
+				<th>Excluir</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="t:${tipo}">
+				<td th:text="${t.id}" />
+				<td th:text="${t.nome}" />
+				<td th:text="${t.faixaEtaria}" />
+				<td th:text="${t.descricao}" />
+				<td th:text="${t.palavrasChave}" />
+				<td><a th:href="@{/alterarTipo(id=${t.id})}">Alterar</a></td>
+				<td><a
+					th:attr="onclick=|return confirm('Deseja excluir o Id: ${t.id}')|"
+					th:href="@{/excluirTipo(id=${t.id})}">Excluir</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul class="pagination">
+		<li th:class="${pagAtual == 1 ? 'disabled' : 'waves-effect'}"><a
+			th:href="${pagAtual > 1 ? pagAtual -1 : '#'}"><i
+				class="material-icons">chevron_left</i></a></li>
+
+		<li th:class="${pagAtual == p ? 'active pink' : 'waves-effect'}"
+			th:each="p:${numPaginas}"><a th:href="${p}"><span
+				th:text="${p}"></span></a></li>
+
+
+		<li th:class="${pagAtual == totalPages ? 'disabled' : 'waves-effect'}"
+			class=waves-effect><a
+			th:href="${pagAtual < totalPages ? pagAtual +1 : '#'}"><i
+				class="material-icons">chevron_right</i></a></li>
+
+	</ul>
+
+	<footer th:replace="fragments/padrao :: rodape"></footer>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="/materialize-v1.0.0/materialize/js/materialize.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('select').formSelect();
+		});
+	</script>
+
+</body>
+</html>
